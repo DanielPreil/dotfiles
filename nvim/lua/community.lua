@@ -6,10 +6,12 @@
 return {
   "AstroNvim/astrocommunity",
   { import = "astrocommunity.pack.lua" },
-  { import = "astrocommunity.pack.typescript" },
-  { import = "astrocommunity.pack.rust" },
-  { import = "astrocommunity.pack.zig" },
   { import = "astrocommunity.pack.python" },
-  { import = "astrocommunity.pack.astro" },
-  -- import/override with your plugins folder
+  { import = "astrocommunity.pack.typescript" },
+  { import = "astrocommunity.pack.tailwindcss" },
+  { import = "astrocommunity.pack.biome" },
+  { import = "astrocommunity.pack.vue" },
+  { import = "astrocommunity.comment.mini-comment" },
+  { import = "astrocommunity.git.git-blame-nvim" },
+  { import = "astrocommunity.recipes.disable-tabline" },
 }

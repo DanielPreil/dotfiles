@@ -1,3 +1,8 @@
+-- AstroLSP allows you to customize the features in AstroNvim's LSP configuration engine
+-- Configuration documentation can be found with `:h astrolsp`
+-- NOTE: We highly recommend setting up the Lua Language Server (`:LspInstall lua_ls`)
+--       as this provides autocomplete and documentation while editing
+
 ---@type LazySpec
 return {
   "AstroNvim/astrolsp",
@@ -11,33 +16,45 @@ return {
     },
     -- customize lsp formatting options
     formatting = {
-      -- control auto formatting on save
       format_on_save = {
-        enabled = true, -- enable or disable format on save globally
-        allow_filetypes = { -- enable format on save for specified filetypes only
-          -- "go",
-        },
-        ignore_filetypes = { -- disable format on save for specified filetypes
-          -- "python",
+        enabled = true,
+        ignore_filetypes = {
+          "css",
+          "scss",
         },
       },
-      disabled = { -- disable formatting capabilities for the listed language servers
-        -- disable lua_ls formatting capability if you want to use StyLua to format your lua code
-        -- "lua_ls",
-      },
-      timeout_ms = 1000, -- default format timeout
-      -- filter = function(client) -- fully override the default formatting function
-      --   return true
-      -- end
-    },
-    -- enable servers that you already have installed without mason
+      disabled = {},
+      timeout_ms = 1000,
+    }, -- enable servers that you already have installed without mason
     servers = {
-      -- "pyright"
+      "lua_ls",
     },
     -- customize language server configuration options passed to `lspconfig`
     ---@diagnostic disable: missing-fields
     config = {
       -- clangd = { capabilities = { offsetEncoding = "utf-8" } },
+      cssls = {
+        settings = {
+          css = {
+            validate = true,
+            lint = {
+              unknownAtRules = "ignore",
+            },
+          },
+          scss = {
+            validate = true,
+            lint = {
+              unknownAtRules = "ignore",
+            },
+          },
+          less = {
+            validate = true,
+            lint = {
+              unknownAtRules = "ignore",
+            },
+          },
+        },
+      },
     },
     -- customize how language servers are attached
     handlers = {
@@ -73,18 +90,41 @@ return {
     -- mappings to be set up on attaching of a language server
     mappings = {
       n = {
-        -- a `cond` key can provided as the string of a server capability to be required to attach, or a function with `client` and `bufnr` parameters from the `on_attach` that returns a boolean
+        gd = {
+          function()
+            -- Get the first LSP client for this buffer
+            local clients = vim.lsp.get_active_clients { bufnr = 0 }
+            if #clients == 0 then
+              vim.notify("No LSP client attached", vim.log.levels.WARN)
+              return
+            end
+
+            local client = clients[1]
+            local params = vim.lsp.util.make_position_params(0, client.offset_encoding)
+
+            vim.lsp.buf_request(0, "textDocument/definition", params, function(err, result, ctx, config)
+              if err then
+                vim.notify("LSP error: " .. err.message, vim.log.levels.ERROR)
+                return
+              end
+
+              if not result or vim.tbl_isempty(result) then
+                vim.notify("No definition found", vim.log.levels.INFO)
+                return
+              end
+
+              -- Jump to first result
+              local location = vim.tbl_islist(result) and result[1] or result
+              vim.lsp.util.jump_to_location(location, client.offset_encoding)
+            end)
+          end,
+          desc = "Go to definition (skip picker)",
+          cond = "textDocument/definition",
+        },
         gD = {
           function() vim.lsp.buf.declaration() end,
           desc = "Declaration of current symbol",
           cond = "textDocument/declaration",
-        },
-        ["<Leader>uY"] = {
-          function() require("astrolsp.toggles").buffer_semantic_tokens() end,
-          desc = "Toggle LSP semantic highlight (buffer)",
-          cond = function(client)
-            return client.supports_method "textDocument/semanticTokens/full" and vim.lsp.semantic_tokens ~= nil
-          end,
         },
       },
     },

@@ -1,26 +1,34 @@
-[![NeoVim Config](https://img.shields.io/badge/NeoVim-AstroNvim-blue.svg)](#)
-[![License](https://img.shields.io/badge/license-MIT-green.svg)](#license)
+# AstroNvim Template
 
-## 🚀 Welcome
+**NOTE:** This is for AstroNvim v5+
 
-This is my personal Neovim configuration, powered by [AstroNvim](https://github.com/AstroNvim/AstroNvim). I’ve layered on a curated set of plugins and custom tweaks to streamline coding in multiple languages and make Neovim feel like home.
+A template for getting started with [AstroNvim](https://github.com/AstroNvim/AstroNvim)
 
----
+## 🛠️ Installation
 
-## ⚙️ Quickstart
+#### Make a backup of your current nvim and shared folder
 
-### Prerequisites
+```shell
+mv ~/.config/nvim ~/.config/nvim.bak
+mv ~/.local/share/nvim ~/.local/share/nvim.bak
+mv ~/.local/state/nvim ~/.local/state/nvim.bak
+mv ~/.cache/nvim ~/.cache/nvim.bak
+```
 
-- **Neovim ≥v0.8.0**
-- Git
-- A Unix-like shell (bash, zsh)
+#### Create a new user repository from this template
 
-### Install
+Press the "Use this template" button above to create a new repository to store your user configuration.
 
-```bash
-# Clone your config
-git clone https://github.com/DanielPreil/nvim-config.git ~/.config/nvim
+You can also just clone this repository directly if you do not want to track your user configuration in GitHub.
 
-# Open Neovim and let AstroNvim bootstrap
+#### Clone the repository
+
+```shell
+git clone https://github.com/<your_user>/<your_repository> ~/.config/nvim
+```
+
+#### Start Neovim
+
+```shell
 nvim
 ```
