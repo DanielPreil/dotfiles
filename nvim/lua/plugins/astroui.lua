@@ -7,9 +7,13 @@ return {
     -- colorscheme = "gruvbox",
     -- colorscheme = "koda",
     colorscheme = "rose-pine",
+    -- colorscheme = "solarized-osaka",
     -- AstroUI allows you to easily modify highlight groups easily for any and all colorschemes
     highlights = {
       init = { -- this table overrides highlights in all themes
+        LineNr = { fg = "#555555" },
+        LineNrAbove = { fg = "#555555" },
+        LineNrBelow = { fg = "#555555" },
         -- Normal
         Normal = { bg = "none" },
         SignColumn = { bg = "none" },

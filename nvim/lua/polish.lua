@@ -23,12 +23,20 @@ vim.api.nvim_create_autocmd("BufWritePost", {
   end,
 })
 
-vim.api.nvim_create_user_command("W", "w", {})
-vim.api.nvim_create_user_command("Wa", "wa", {})
-vim.api.nvim_create_user_command("WA", "wa", {})
-vim.api.nvim_create_user_command("Q", "q", {})
-vim.api.nvim_create_user_command("Wq", "wq", {})
-vim.api.nvim_create_user_command("WQ", "wq", {})
-vim.api.nvim_create_user_command("Wqa", "wqa", {})
-vim.api.nvim_create_user_command("WQa", "wqa", {})
-vim.api.nvim_create_user_command("WQA", "wqa", {})
+local cmds = {
+  W = "w",
+  Wa = "wa",
+  WA = "wa",
+  Q = "q",
+  Qa = "qa",
+  QA = "qa",
+  Wq = "wq",
+  WQ = "wq",
+  Wqa = "wqa",
+  WQa = "wqa",
+  WQA = "wqa",
+}
+
+for alias, cmd in pairs(cmds) do
+  vim.api.nvim_create_user_command(alias, cmd, {})
+end

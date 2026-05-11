@@ -1,4 +1,3 @@
--- ~/.config/nvim/lua/user/your_astrocore_file.lua
 -- NOTE: remove any top guard like `if true then return {} end` to activate this file @type LazySpec
 return {
   "AstroNvim/astrocore",
@@ -16,17 +15,7 @@ return {
       virtual_text = true,
       underline = true,
     },
-    filetypes = {
-      extension = {
-        foo = "fooscript",
-      },
-      filename = {
-        [".foorc"] = "fooscript",
-      },
-      pattern = {
-        [".*/etc/foo/.*"] = "fooscript",
-      },
-    },
+    filetypes = {},
     options = {
       opt = {
         relativenumber = true,
@@ -34,7 +23,9 @@ return {
         spell = false,
         signcolumn = "yes",
         wrap = false,
+        nrformats = { "bin", "hex", "alpha" },
       },
+
       g = {
         -- global vim.g values if needed
       },
@@ -42,12 +33,38 @@ return {
 
     -- Mappings through AstroCore (this is the correct place for plugin spec mappings)
     mappings = {
+      v = {
+        ["<leader>dc"] = {
+          function()
+            -- escape visual mode először, hogy '<,'> markok frissüljenek
+            local esc = vim.api.nvim_replace_termcodes("<Esc>", true, false, true)
+            vim.api.nvim_feedkeys(esc, "x", false)
+            local start = vim.fn.line "'<"
+            local finish = vim.fn.line "'>"
+            vim.cmd(start .. "," .. finish .. "s/ *--.*$//e")
+          end,
+          desc = "Delete inline comments",
+        },
+      },
       n = {
+        ["<leader>dc"] = {
+          function() vim.cmd [[s/ *--.*$//e]] end,
+          desc = "Delete inline comment",
+        },
         -- navigate buffer tabs using existing motions
         ["]b"] = { function() require("astrocore.buffer").nav(vim.v.count1) end, desc = "Next buffer" },
         ["[b"] = { function() require("astrocore.buffer").nav(-vim.v.count1) end, desc = "Previous buffer" },
-
-        -- TAB / SHIFT-TAB in normal mode -> next / previous buffer
+        ["<leader>tt"] = {
+          function()
+            local word = vim.fn.expand "<cword>"
+            if word == "true" then
+              vim.cmd "normal! ciwfalse"
+            elseif word == "false" then
+              vim.cmd "normal! ciwtrue"
+            end
+          end,
+          desc = "Toggle true/false",
+        }, -- TAB / SHIFT-TAB in normal mode -> next / previous buffer
         -- Note: uses vim.v.count1 so counts like 2<Tab> will move 2 buffers
         -- ["<Tab>"] = {
         --   function() require("astrocore.buffer").nav(vim.v.count1) end,

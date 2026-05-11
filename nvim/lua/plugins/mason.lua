@@ -5,6 +5,7 @@ return {
     opts = {
       ensure_installed = {
         "vtsls",
+        "astro-language-server",
         "tailwindcss-language-server",
         "emmet-ls",
         "json-lsp",

@@ -8,13 +8,23 @@ return {
   config = function()
     require("noice").setup {
       lsp = {
-        -- AstroLSP kezeli ezeket, noice ne nyúljon hozzájuk
-        hover = { enabled = false },
+        hover = {
+          enabled = false,
+          opts = {
+            border = { style = "rounded" },
+            position = { row = 2, col = 2 },
+            size = {
+              max_width = 80,
+              max_height = 20,
+            },
+          },
+        },
         signature = { enabled = false },
         message = { enabled = false },
         override = {
           ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
           ["vim.lsp.util.stylize_markdown"] = true,
+          ["cmp.entry.get_documentation"] = true,
         },
       },
       routes = {
@@ -40,7 +50,7 @@ return {
         bottom_search = true,
         command_palette = true,
         long_message_to_split = true,
-        lsp_doc_border = false, -- AstroLSP kezeli a doc bordereket
+        lsp_doc_border = true,
       },
     }
   end,

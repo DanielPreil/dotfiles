@@ -1,12 +1,10 @@
 return {
   -- "morhetz/gruvbox",
   -- name = "gruvbox",
-
   -- "oskarnurm/koda.nvim",
-  -- lazy = false, -- make sure we load this during startup if it is your main colorscheme
-  -- priority = 1000, -- make sure to load this before all the other start plugins
+  -- lazy = false,
+  -- priority = 1000,
   -- config = function()
-  --   -- require("koda").setup({ transparent = true })
   --   vim.cmd "colorscheme koda"
   -- end,
 
@@ -15,4 +13,10 @@ return {
   lazy = false,
   priority = 1000,
   config = function() vim.cmd "colorscheme rose-pine-main" end,
+
+  -- "craftzdog/solarized-osaka.nvim",
+  -- name = "solarized-osaka",
+  -- lazy = false,
+  -- priority = 1000,
+  -- config = function() vim.cmd "colorscheme solarized-osaka" end,
 }
