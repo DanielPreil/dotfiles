@@ -1,0 +1,19 @@
+# macOS
+.DS_Store
+
+# Local/private shell config
+.zshrc.local
+.zshrc.backup*
+
+# Environment files
+.env
+.env.*
+
+# Secrets / keys / certificates
+*.pem
+*.key
+*.p12
+*.crt
+
+# Private SSH material
+.ssh/
